@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales List</title>
+</head>
+<body>
+    <h1>Sales Records</h1>
+    <table border="1">
+        <tr>
+            <th>Customer Name</th>
+            <th>Salesperson</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price per Unit</th>
+            <th>Total Price</th>
+            <th>Date of Sale</th>
+        </tr>
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.customer_name }}</td>
+            <td>{{ sale.salesperson }}</td>
+            <td>{{ sale.product.product_name }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>{{ sale.price_per_unit }}</td>
+            <td>{{ sale.total_price }}</td>
+            <td>{{ sale.date_of_sale }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'add_sale' %}">Add New Sale</a>
+    <br>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

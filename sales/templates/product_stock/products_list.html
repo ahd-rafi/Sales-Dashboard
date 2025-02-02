@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products Stock List</title>
+</head>
+<body>
+    <h1>Products Stock List</h1>
+    <table border="1">
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity in stock</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.quantity_in_stock }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'add_products' %}">Add New Product</a>
+    <br>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
+</html>
