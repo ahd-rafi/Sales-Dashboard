@@ -100,19 +100,63 @@ WSGI_APPLICATION = 'sales_dashboard.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'sales_db',  # Your database name
+#         'USER': 'postgres',  # Your PostgreSQL username
+#         'PASSWORD': '1486R@fi',  # Your PostgreSQL password
+#         'HOST': 'localhost',  # Change if using a remote DB
+#         'PORT': '5432',  # Default PostgreSQL port
+#     }
+# }
+
+
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sales_db',  # Your database name
-        'USER': 'postgres',  # Your PostgreSQL username
-        'PASSWORD': '1486R@fi',  # Your PostgreSQL password
-        'HOST': 'localhost',  # Change if using a remote DB
-        'PORT': '5432',  # Default PostgreSQL port
+        'NAME': os.environ.get('DATABASE_NAME', 'sales_db'),
+        'USER': os.environ.get('DATABASE_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', '1486R@fi'),
+        'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
+        'PORT': os.environ.get('DATABASE_PORT', '5432'),
     }
 }
 
+# import os
+# from dotenv import load_dotenv
+# load_dotenv()  # This will load the .env file
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME', 'sales_db'),
+#         'USER': os.getenv('DB_USER', 'postgres'),
+#         'PASSWORD': os.getenv('DB_PASSWORD', '1486R@fi'),
+#         'HOST': os.getenv('DB_HOST', 'localhost'),
+#         'PORT': os.getenv('DB_PORT', '5432'),
+#     }
+# }
+
+
+
+
+
+# import os
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME', 'sales_db'),
+#         'USER': os.getenv('DB_USER', 'postgres'),
+#         'PASSWORD': os.getenv('DB_PASSWORD', '1486R@fi'),
+#         'HOST': os.getenv('DB_HOST', 'localhost'),
+#         'PORT': os.getenv('DB_PORT', '5432'),
+#     }
+# }
 
 
 DISABLE_SERVER_SIDE_CURSORS = True  # Required for CockroachDB
@@ -153,10 +197,19 @@ USE_TZ = True
 
 # STATIC_URL = 'static/'
 
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
+
+
+import os
+
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+
+# Add this line to define a directory for static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

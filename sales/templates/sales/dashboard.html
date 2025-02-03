@@ -251,9 +251,16 @@
                     <canvas id="salesLineChart"></canvas>
                 </div>
             </div>
+
+            <div class="charts-container">
             <div class="chart-card">
                 <h2>Weekly Revenue Trends (Current Month)</h2>
                 <canvas id="weeklyRevenueChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>Top Revenue Products</h2>
+                <canvas id="revenueBarChart"></canvas>
+            </div>
             </div>
             
 
@@ -263,9 +270,16 @@
                     <canvas id="salesPieChart"></canvas>
                 </div>
                 <div class="chart-card">
-                    <h2>Total Sales Count</h2>
-                    <canvas id="totalSalesChart"></canvas>
+                    <h2>Revenue Over Time</h2>
+                    <canvas id="revenueLineChart"></canvas>
                 </div>
+            </div>
+
+
+            
+            <div class="chart-card">
+                <h2>Stock Levels</h2>
+                <canvas id="stockChart"></canvas>
             </div>
 
             <div class="low-stock">
@@ -412,33 +426,89 @@ var weeklyRevenueCtx = document.getElementById('weeklyRevenueChart').getContext(
         }
     });
 
-    // Total Sales Chart
-    var totalSalesCtx = document.getElementById('totalSalesChart').getContext('2d');
-    new Chart(totalSalesCtx, {
-        type: 'bar',
-        data: {
-            labels: [{% for sale in total_sales_data %}"{{ sale.date_of_sale }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-            datasets: [{
-                label: 'Total Sales Count',
-                data: [{% for sale in total_sales_data %}{{ sale.sales_count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#2ecc71',
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
+    // stock level
+    var stockCtx = document.getElementById('stockChart').getContext('2d');
+new Chart(stockCtx, {
+    type: 'bar',
+    data: {
+        labels: [{% for p in products %}"{{ p.product_name }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Stock Quantity',
+            data: [{% for p in products %}{{ p.quantity_in_stock }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+            backgroundColor: '#3498db'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Replace Total Sales Chart with this (revenue over time)
+var revenueCtx = document.getElementById('revenueLineChart').getContext('2d');
+new Chart(revenueCtx, {
+    type: 'line',
+    data: {
+        labels: [{% for day in daily_revenue_data %}"{{ day.date_of_sale|date:'Y-m-d' }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Daily Revenue ($)',
+            data: [{% for day in daily_revenue_data %}{{ day.daily_revenue|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+            borderColor: '#2ecc71',
+            fill: false,
+            tension: 0.1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Revenue ($)'
                 }
             }
         }
-    });
+    }
+});
+
+
+// top revenue products
+var revenueBarCtx = document.getElementById('revenueBarChart').getContext('2d');
+new Chart(revenueBarCtx, {
+    type: 'bar',
+    data: {
+        labels: [{% for p in top_revenue_products %}"{{ p.product__product_name }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Revenue ($)',
+            data: [{% for p in top_revenue_products %}{{ p.total_revenue }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+            backgroundColor: '#9b59b6'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'USD'
+                }
+            }
+        }
+    }
+});
+
+
+
+
+
 });
     </script>
 
-<!-- <script src="scripts.js"></script> -->
-    <!-- <script src="{%static 'js/scripts.js'%}"></script> -->
-
-    <!-- <script src="scripts.js"></script> -->
 </body>
 </html>

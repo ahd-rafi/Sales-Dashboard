@@ -150,6 +150,9 @@ def dashboard(request):
         f"{week_3_end.day+1}-{last_day_of_month.day} {month_name}"
     ]
 
+    top_revenue_products = sales_data.values('product__product_name').annotate(total_revenue=Sum('total_price')).order_by('-total_revenue')[:5]
+
+
     # Prepare context
     context = {
         'total_revenue': total_revenue,
@@ -167,10 +170,10 @@ def dashboard(request):
         'selected_salesperson': salesperson,
         'selected_product': product_name,
         'salesperson_revenue': salesperson_revenue,
-        'total_sales_data': sales_data.values('date_of_sale').annotate(
-            sales_count=Count('id')
-        ).order_by('date_of_sale'),
+        'total_sales_data': sales_data.values('date_of_sale').annotate(sales_count=Count('id')).order_by('date_of_sale'),
         'low_stock_products': Product.objects.filter(quantity_in_stock__lt=5),
+        'top_revenue_products':top_revenue_products,
+         'daily_revenue_data': sales_data.values('date_of_sale').annotate(daily_revenue=Sum('total_price')).order_by('date_of_sale'),
     }
     
     return render(request, 'sales/dashboard.html', context)
