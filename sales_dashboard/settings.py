@@ -112,18 +112,38 @@ WSGI_APPLICATION = 'sales_dashboard.wsgi.application'
 # }
 
 
+# import os
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.environ.get('DATABASE_NAME', 'sales_db'),
+#         'USER': os.environ.get('DATABASE_USER', 'postgres'),
+#         'PASSWORD': os.environ.get('DATABASE_PASSWORD', '1486R@fi'),
+#         'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
+#         'PORT': os.environ.get('DATABASE_PORT', '5432'),
+#     }
+# }
+
+
 import os
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME', 'sales_db'),
-        'USER': os.environ.get('DATABASE_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', '1486R@fi'),
-        'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
-        'PORT': os.environ.get('DATABASE_PORT', '5432'),
+        'NAME': os.getenv('POSTGRES_DB', 'sales_db'),      # Set default DB name
+        'USER': os.getenv('POSTGRES_USER', 'admin'),     # Set default user
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'admin123'),  # Set default password
+        'HOST': 'db',  # The name of the DB service from docker-compose.yml
+        'PORT': '5432',  # Default PostgreSQL port
     }
 }
+
+
+
+
+
+
 
 # import os
 # from dotenv import load_dotenv

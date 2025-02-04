@@ -2,35 +2,34 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:15
-    container_name: sales-db
-    restart: always
+    image: postgres:latest
     environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
       POSTGRES_DB: sales_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1486R@fi
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql/data  # This maps the local 'db' folder to the Postgres data folder
     ports:
       - "5432:5432"
+    networks:
+      - app_network
 
   web:
     build: .
-    container_name: sales-dashboard
-    depends_on:
-      - db
-    ports:
-      - "8000:8000"
-    environment:
-      DATABASE_NAME: sales_db
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: 1486R@fi
-      DATABASE_HOST: db
-      DATABASE_PORT: 5432
+    command: ["sh", "-c", "chmod +x /app/entrypoint.sh && /app/entrypoint.sh"]
     volumes:
       - .:/app
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
 
 volumes:
-  postgres_data:
- 
+  db_data:  # This is a Docker volume that will persist data
+    driver: local
