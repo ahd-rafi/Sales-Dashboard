@@ -1,11 +1,12 @@
 import os
 import django
+from sales.models import Product, SalesRecord
+from datetime import date
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sales_dashboard.settings")
 django.setup()
 
-from sales.models import Product, SalesRecord
-from datetime import date
+
 
 def seed_products():
     products = [

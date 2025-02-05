@@ -1,2 +1,1 @@
-# Set the entrypoint.sh file to use LF endings
 entrypoint.sh text eol=lf

@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-wf+aga-%5r!u9+s!f%^*sm9w%wv-4pje85y^50v_kcxtxy(0_^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #installes
+    #my_app
     'sales',
 ]
 
@@ -85,20 +85,6 @@ WSGI_APPLICATION = 'sales_dashboard.wsgi.application'
 # }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'sales_dashboard',
-#         'USER': 'ahmad_rafi',
-#         'PASSWORD': 'WTa2l3CJcq7EtvnO5HoXdg',
-#         'HOST': 'hasty-wyvern-7598.j77.aws-eu-central-1.cockroachlabs.cloud',
-#         'PORT': '26257',
-#         'OPTIONS': {
-#             'sslmode': 'verify-full',
-#             'sslrootcert': os.path.expanduser(r"C:\Users\ASUS\AppData\Roaming\postgresql\root.crt"),  # Path to your CA Cert
-#         },
-#     }
-# }
 
 # DATABASES = {
 #     'default': {
@@ -112,71 +98,20 @@ WSGI_APPLICATION = 'sales_dashboard.wsgi.application'
 # }
 
 
-# import os
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get('DATABASE_NAME', 'sales_db'),
-#         'USER': os.environ.get('DATABASE_USER', 'postgres'),
-#         'PASSWORD': os.environ.get('DATABASE_PASSWORD', '1486R@fi'),
-#         'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
-#         'PORT': os.environ.get('DATABASE_PORT', '5432'),
-#     }
-# }
-
-
 import os
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'sales_db'),      # Set default DB name
-        'USER': os.getenv('POSTGRES_USER', 'admin'),     # Set default user
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'admin123'),  # Set default password
-        'HOST': 'db',  # The name of the DB service from docker-compose.yml
-        'PORT': '5432',  # Default PostgreSQL port
+        'NAME': os.getenv('POSTGRES_DB', 'sales_db'),
+        'USER': os.getenv('POSTGRES_USER', 'admin'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'admin123'),
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
 
-
-
-
-
-
-# import os
-# from dotenv import load_dotenv
-# load_dotenv()  # This will load the .env file
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('DB_NAME', 'sales_db'),
-#         'USER': os.getenv('DB_USER', 'postgres'),
-#         'PASSWORD': os.getenv('DB_PASSWORD', '1486R@fi'),
-#         'HOST': os.getenv('DB_HOST', 'localhost'),
-#         'PORT': os.getenv('DB_PORT', '5432'),
-#     }
-# }
-
-
-
-
-
-# import os
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('DB_NAME', 'sales_db'),
-#         'USER': os.getenv('DB_USER', 'postgres'),
-#         'PASSWORD': os.getenv('DB_PASSWORD', '1486R@fi'),
-#         'HOST': os.getenv('DB_HOST', 'localhost'),
-#         'PORT': os.getenv('DB_PORT', '5432'),
-#     }
-# }
 
 
 DISABLE_SERVER_SIDE_CURSORS = True  # Required for CockroachDB
@@ -212,7 +147,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 # STATIC_URL = 'static/'
@@ -227,11 +161,9 @@ import os
 
 STATIC_URL = '/static/'
 
-# Add this line to define a directory for static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
-# Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

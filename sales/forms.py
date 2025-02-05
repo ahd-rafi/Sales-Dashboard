@@ -1,26 +1,9 @@
-# from django import forms
-# from .models import SalesRecord, Product
-
-# class SalesForm(forms.ModelForm):
-#     class Meta:
-#         model = SalesRecord
-#         fields = ['customer_name', 'salesperson', 'product_name', 'quantity', 'price_per_unit', 'date_of_sale']
-
-
-
-# class ProductForm(forms.ModelForm):
-#     class Meta:
-#         model = Product
-#         fields = ['product_name', 'quantity_in_stock']
-
-
-
 from django import forms
 from .models import SalesRecord, Product
 
 class SalesForm(forms.ModelForm):
     product = forms.ModelChoiceField(
-        queryset=Product.objects.filter(quantity_in_stock__gt=0),  # Only show products with stock
+        queryset=Product.objects.filter(quantity_in_stock__gt=0),
         empty_label="Select a product"
     )
 
@@ -28,7 +11,6 @@ class SalesForm(forms.ModelForm):
         model = SalesRecord
         fields = ['customer_name', 'salesperson', 'product', 'quantity', 'price_per_unit', 'date_of_sale']
 
-    # Optionally, add validation for fields like quantity, price_per_unit, etc.
     def clean_quantity(self):
         quantity = self.cleaned_data.get('quantity')
         if quantity <= 0:
@@ -42,7 +24,6 @@ class SalesForm(forms.ModelForm):
         return price
 
 
-# forms.py
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -54,19 +35,15 @@ class ProductForm(forms.ModelForm):
         quantity = cleaned_data.get('quantity_in_stock')
 
         if product_name and quantity is not None:
-            # Clean and normalize the product name
             product_name = product_name.strip().lower()
             
-            # Check for existing product (case-insensitive)
             existing = Product.objects.filter(product_name__iexact=product_name).first()
             if existing:
-                # Update existing product's stock directly
                 existing.quantity_in_stock += quantity
                 existing.save()
                 
-                # Add non-field error and prevent new creation
                 self.add_error(None, f"Updated existing product stock to {existing.quantity_in_stock}")
-                cleaned_data['product_name'] = existing.product_name  # Match case
+                cleaned_data['product_name'] = existing.product_name
 
         return cleaned_data
 
