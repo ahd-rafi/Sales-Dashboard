@@ -1,8 +1,5 @@
 # Sales Dashboard with Django
 
-![Dashboard Preview](https://via.placeholder.com/800x400.png?text=Sales+Dashboard+Preview)  
-*Replace with actual screenshot of your dashboard*
-
 A real-time sales analytics dashboard built with Django and PostgreSQL, featuring interactive charts, sales management, and inventory tracking.
 
 ## Features
