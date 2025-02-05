@@ -54,11 +54,18 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
+import os
+
+STATIC_URL = '/static/'  # Keep the leading slash for consistency
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Ensure BASE_DIR is used
+
+# Enable WhiteNoise for serving static files
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # make sure the below lines also included
-STATIC_URL = 'static/'
-STATIC_ROOT = 'staticfiles'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATIC_URL = 'static/'
+# STATIC_ROOT = 'staticfiles'
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 ROOT_URLCONF = 'sales_dashboard.urls'
 
 TEMPLATES = [
@@ -163,11 +170,11 @@ USE_TZ = True
 # ]
 
 
-import os
+# import os
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
