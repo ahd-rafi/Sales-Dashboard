@@ -99,17 +99,6 @@ WSGI_APPLICATION = 'sales_dashboard.wsgi.application'
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'sales_db',  # Your database name
-#         'USER': 'postgres',  # Your PostgreSQL username
-#         'PASSWORD': '1486R@fi',  # Your PostgreSQL password
-#         'HOST': 'localhost',  # Change if using a remote DB
-#         'PORT': '5432',  # Default PostgreSQL port
-#     }
-# }
-
 
 import os
 

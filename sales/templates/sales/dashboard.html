@@ -1,171 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Sales Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <h1>Sales Dashboard</h1>
-    <p>Total Revenue: {{ total_revenue }}</p>
-    <p>Total Sales: {{ total_sales }}</p>
-
-    <h2>Top Selling Products</h2>
-    <ul>
-        {% for product in top_products %}
-        <li>{{ product.product_name }}: {{ product.total_sold }}</li>
-        {% endfor %}
-    </ul>
-
-    <canvas id="salesChart"></canvas>
-    
-    <script>
-        var ctx = document.getElementById('salesChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [{% for product in top_products %}"{{ product.product_name }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-                datasets: [{
-                    label: 'Units Sold',
-                    data: [{% for product in top_products %}{{ product.total_sold }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                    backgroundColor: 'red'
-                }]
-            }
-        });
-    </script>
-    
-
-</body>
-</html>
-
-
---------------------------------------- -->
-
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Sales Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        .filter-section {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f5f5f5;
-            border-radius: 5px;
-        }
-        .filter-group {
-            margin: 10px 0;
-        }
-        select, input[type="date"] {
-            padding: 5px;
-            margin: 5px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        button {
-            padding: 8px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <h1>Sales Dashboard</h1>
-
-    <div class="filter-section">
-        <form method="get">
-            <div class="filter-group">
-                <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" value="{{ selected_start_date }}">
-                
-                <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" value="{{ selected_end_date }}">
-            </div>
-
-            <div class="filter-group">
-                <label for="salesperson">Salesperson:</label>
-                <select name="salesperson" id="salesperson">
-                    <option value="">All Salespeople</option>
-                    {% for person in salespeople %}
-                        <option value="{{ person }}" {% if selected_salesperson == person %}selected{% endif %}>
-                            {{ person }}
-                        </option>
-                    {% endfor %}
-                </select>
-
-                <label for="product_name">Product:</label>
-                <select name="product_name" id="product_name">
-                    <option value="">All Products</option>
-                    {% for product in products %}
-                        <option value="{{ product }}" {% if selected_product == product %}selected{% endif %}>
-                            {{ product }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <button type="submit">Apply Filters</button>
-            <button type="button" onclick="window.location.href='{% url 'dashboard' %}'">Reset Filters</button>
-        </form>
-    </div>
-
-    <div class="dashboard-content">
-        <p>Total Revenue: ${{ total_revenue|floatformat:2 }}</p>
-        <p>Total Sales: {{ total_sales }}</p>
-
-        <h2>Top Selling Products</h2>
-        <ul>
-            {% for product in top_products %}
-            <li>{{ product.product_name }}: {{ product.total_sold }} units</li>
-            {% endfor %}
-        </ul>
-
-        <canvas id="salesChart"></canvas>
-    </div>
-
-    <script>
-        flatpickr("#start_date", {
-            dateFormat: "Y-m-d"
-        });
-        flatpickr("#end_date", {
-            dateFormat: "Y-m-d"
-        });
-
-        var ctx = document.getElementById('salesChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [{% for product in top_products %}"{{ product.product_name }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-                datasets: [{
-                    label: 'Units Sold',
-                    data: [{% for product in top_products %}{{ product.total_sold }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                    backgroundColor: '#007bff'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
-</body>
-</html> -->
-
-
-
-<!-- --------------------------------------------------- OLD -->
 
 {% load static %}
 
@@ -176,25 +8,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Dashboard</title>
     
-<link rel="stylesheet" href="{%static 'css/style.css'%}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+
 </head>
 <body>
     <div class="dashboard-container">
-        <h1>Sales Dashboard</h1>
-
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><b> Sales Dashboard</b></h1>
+            <div class="d-grid gap-2 d-md-block">
+                <button type="button" class="my_button rounded">
+                    <a style="text-decoration: none;" href="{% url 'add_sale' %}"> Sales</a>
+                </button>
+                <button type="button" class="my_button">
+                    <a style="text-decoration: none;" href="{% url 'product_stock' %}">Stocks</a>
+                </button>
+            </div>
+        </div>
+        
         <!-- Filter Section -->
         <div class="filter-section">
             <form method="get">
                 <div class="filter-group">
-                    <label for="start_date">Start Date:</label>
-                    <input type="date" id="start_date" name="start_date" value="{{ selected_start_date }}">
-
-                    <label for="end_date">End Date:</label>
-                    <input type="date" id="end_date" name="end_date" value="{{ selected_end_date }}">
+                    <div class="date-pickers">
+                        <label for="start_date" class="form-label">Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" value="{{ selected_start_date }}">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" id="end_date" name="end_date" value="{{ selected_end_date }}">
+                    </div>
+                
+                    {% if low_stock_products %}
+                        <div class="alert-warning">
+                            <a href="#lowstockproduct" style="text-decoration: none;color: red;"> Warning: Some products are running low on stock!</a>
+                        </div>
+                    {% endif %}
                 </div>
+                
 
                 <div class="filter-group">
                     <label for="salesperson">Salesperson:</label>
@@ -240,53 +92,53 @@
                 <div class="chart-card">
                     <h2>Top Selling Products</h2>
                     <canvas id="salesBarChart"></canvas>
-                    <ul>
+                    <!-- <ul>
                         {% for product in top_products %}
                         <li>{{ product.product__product_name }}: {{ product.total_sold }} units</li>
                         {% endfor %}
-                    </ul>
+                    </ul> -->
                 </div>
                 <div class="chart-card">
                     <h2>Sales Over Time</h2>
                     <canvas id="salesLineChart"></canvas>
                 </div>
+                <div class="chart-card">
+                    <h2>Weekly Revenue Trends (Current Month)</h2>
+                    <canvas id="weeklyRevenueChart"></canvas>
+                </div>
             </div>
 
-            <div class="charts-container">
-            <div class="chart-card">
-                <h2>Weekly Revenue Trends (Current Month)</h2>
-                <canvas id="weeklyRevenueChart"></canvas>
-            </div>
-            <div class="chart-card">
-                <h2>Top Revenue Products</h2>
-                <canvas id="revenueBarChart"></canvas>
-            </div>
-            </div>
             
 
             <div class="charts-container">
+                <div class="chart-card">
+                    <h2 class="pad-class">Top Revenue Products</h2>
+                    <canvas id="revenueBarChart"></canvas>
+                </div>
                 <div class="chart-card">
                     <h2>Revenue Breakdown by Salesperson</h2>
                     <canvas id="salesPieChart"></canvas>
                 </div>
+               
+                
                 <div class="chart-card">
-                    <h2>Revenue Over Time</h2>
-                    <canvas id="revenueLineChart"></canvas>
+                    <h2 class="pad-class">Stock Levels</h2>
+                    <canvas id="stockChart"></canvas>
                 </div>
             </div>
 
+            <!-- <div class="chart-card">
+                <h2>Revenue Over Time</h2>
+                <canvas id="revenueLineChart"></canvas>
+            </div> -->
+           
+          
 
-            
-            <div class="chart-card">
-                <h2>Stock Levels</h2>
-                <canvas id="stockChart"></canvas>
-            </div>
-
-            <div class="low-stock">
+            <div class="low-stock" id="lowstockproduct">
                 <h3>Low-Stock Products</h3>
                 <ul>
                     {% for product in low_stock_products %}
-                        <li>{{ product.product_name }} - Quantity in Stock: {{ product.quantity_in_stock }}</li>
+                        <li style="color: #fff;">{{ product.product_name }} - Quantity in Stock: {{ product.quantity_in_stock }}</li>
                     {% endfor %}
                 </ul>
             </div>
@@ -304,27 +156,49 @@
 
     // Bar Chart Initialization (Top Selling Products)
     var barCtx = document.getElementById('salesBarChart').getContext('2d');
-    new Chart(barCtx, {
-        type: 'bar',
-        data: {
-            labels: [{% for product in top_products %}"{{ product.product__product_name }}"{% if not forloop.last %}, {% endif %}{% endfor %}],            datasets: [{
-                label: 'Units Sold',
-                data: [{% for product in top_products %}{{ product.total_sold }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: '#3498db'
-            }]
+new Chart(barCtx, {
+    type: 'bar',
+    data: {
+        labels: [{% for product in top_products %}"{{ product.product__product_name }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+            label: 'Units Sold',
+            data: [{% for product in top_products %}{{ product.total_sold }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+            backgroundColor: '#3498db'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: 'white'
+                },
+                title: {
+                    display: true,
+                    text: 'Units Sold',
+                    color: 'white'
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white'
+                }
+            }
         },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white'
                 }
             }
         }
-    });
+    }
+});
+
 
     // Line Chart Initialization (Sales Over Time)
-var lineCtx = document.getElementById('salesLineChart').getContext('2d');
+    var lineCtx = document.getElementById('salesLineChart').getContext('2d');
 new Chart(lineCtx, {
     type: 'line',
     data: {
@@ -341,90 +215,126 @@ new Chart(lineCtx, {
         responsive: true,
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                ticks: {
+                    color: 'white'
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white' 
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white'
+                }
             }
         }
     }
 });
 
+
 // Weekly Revenue Line Chart
 var weeklyRevenueCtx = document.getElementById('weeklyRevenueChart').getContext('2d');
-    new Chart(weeklyRevenueCtx, {
-        type: 'line',
-        data: {
-            labels: {{ week_labels|safe }},  // Dynamic labels like ["1-7 Jan", "8-14 Jan"]
-            datasets: [{
-                label: 'Weekly Revenue ($)',
-                data: [
-                    {{ revenue_week_1 }},
-                    {{ revenue_week_2 }},
-                    {{ revenue_week_3 }},
-                    {{ revenue_week_4 }}
-                ],
-                borderColor: '#e74c3c',
-                backgroundColor: 'rgba(231, 76, 60, 0.2)',
-                tension: 0.3,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: (ctx) => `$${ctx.raw.toFixed(2)}`
-                    }
+new Chart(weeklyRevenueCtx, {
+    type: 'line',
+    data: {
+        labels: {{ week_labels|safe }}, 
+        datasets: [{
+            label: 'Weekly Revenue ($)',
+            data: [
+                {{ revenue_week_1 }},
+                {{ revenue_week_2 }},
+                {{ revenue_week_3 }},
+                {{ revenue_week_4 }}
+            ],
+            borderColor: '#e74c3c',
+            backgroundColor: 'rgba(231, 76, 60, 0.2)',
+            tension: 0.3,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: (ctx) => `$${ctx.raw.toFixed(2)}`
                 }
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Revenue ($)'
-                    }
+            legend: {
+                labels: {
+                    color: 'white'
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Revenue ($)',
+                    color: 'white'
+                },
+                ticks: {
+                    color: 'white' 
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white'
                 }
             }
         }
-    });
+    }
+});
+
 
 
 
     // Pie Chart Initialization (Revenue Breakdown by Salesperson)
     var pieCtx = document.getElementById('salesPieChart').getContext('2d');
-    new Chart(pieCtx, {
-        type: 'pie',
-        data: {
-            labels: [{% for salesperson in salesperson_revenue %}"{{ salesperson.salesperson }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-            datasets: [{
-                data: [{% for salesperson in salesperson_revenue %}{{ salesperson.revenue }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-                backgroundColor: ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'],
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Revenue Breakdown by Salesperson',
-                    font: {
-                        size: 16,
-                        weight: 'bold'
-                    }
-                },
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
-                        }
+new Chart(pieCtx, {
+    type: 'doughnut',
+    data: {
+        labels: [{% for salesperson in salesperson_revenue %}"{{ salesperson.salesperson }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+        datasets: [{
+            data: [{% for salesperson in salesperson_revenue %}{{ salesperson.revenue }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+            backgroundColor: ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'],
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Sales Revenue by Salesperson',
+                color: 'white',
+                font: {
+                    size: 16,
+                    weight: 'bold'
+                }
+            },
+            legend: {
+                position: 'top',
+                labels: {
+                    color: 'white'
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.label + ': $' + tooltipItem.raw.toFixed(2);
                     }
                 }
             }
         }
-    });
+    }
+});
+
 
     // stock level
     var stockCtx = document.getElementById('stockChart').getContext('2d');
@@ -440,36 +350,23 @@ new Chart(stockCtx, {
     },
     options: {
         responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white'
+                }
             }
-        }
-    }
-});
-
-// Replace Total Sales Chart with this (revenue over time)
-var revenueCtx = document.getElementById('revenueLineChart').getContext('2d');
-new Chart(revenueCtx, {
-    type: 'line',
-    data: {
-        labels: [{% for day in daily_revenue_data %}"{{ day.date_of_sale|date:'Y-m-d' }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [{
-            label: 'Daily Revenue ($)',
-            data: [{% for day in daily_revenue_data %}{{ day.daily_revenue|default:0 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-            borderColor: '#2ecc71',
-            fill: false,
-            tension: 0.1
-        }]
-    },
-    options: {
-        responsive: true,
+        },
         scales: {
             y: {
                 beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Revenue ($)'
+                ticks: {
+                    color: 'white'
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white'
                 }
             }
         }
@@ -477,8 +374,11 @@ new Chart(revenueCtx, {
 });
 
 
+
+
 // top revenue products
 var revenueBarCtx = document.getElementById('revenueBarChart').getContext('2d');
+
 new Chart(revenueBarCtx, {
     type: 'bar',
     data: {
@@ -491,12 +391,34 @@ new Chart(revenueBarCtx, {
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                top: "20px",
+            }
+        },
         scales: {
             y: {
                 beginAtZero: true,
                 title: {
                     display: true,
-                    text: 'USD'
+                    text: 'USD',
+                    color: 'white'
+                },
+                ticks: {
+                    color: 'white'
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white'
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white'
                 }
             }
         }
@@ -504,10 +426,8 @@ new Chart(revenueBarCtx, {
 });
 
 
-
-
-
 });
+
     </script>
 
 </body>
